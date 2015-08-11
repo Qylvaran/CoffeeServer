@@ -30,12 +30,13 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="moonAdder.js" />
     <Compile Include="server.js" />
-    <Compile Include="static\jquery.min.js" />
+    <Content Include="dbase.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="static\2015-July.json" />
     <Content Include="static\index.html" />
+    <Content Include="static\rptindex.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="static\" />

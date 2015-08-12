@@ -32,9 +32,7 @@
   <ItemGroup>
     <Compile Include="moonAdder.js" />
     <Compile Include="server.js" />
-    <Content Include="dbase.json">
-      <Publish>True</Publish>
-    </Content>
+    <Content Include="dbase.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="static\index.html" />

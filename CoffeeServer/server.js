@@ -3,7 +3,8 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile');
-
+var fs = require('fs');
+var moonAdder = require('./moonAdder.js');
 var app = express();
 var port = process.env.port || 1337;
 
@@ -13,7 +14,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var dataFile = 'dbase.json';
-var liveDB = jsonfile.readFileSync(dataFile);
+var liveDB;
+var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+fs.stat(dataFile, function (err, stat) {
+    if (err) {
+        var now = new Date();
+        var monthString = '' + now.getFullYear() + '-' + monthNames[now.getMonth()];
+        var startDB = {};
+        startDB[monthString] = moonAdder(now);
+        console.log(startDB);//debugging
+        jsonfile.writeFileSync(dataFile, startDB);
+    }
+    liveDB = jsonfile.readFileSync(dataFile);
+});
 
 app.post('/volunteer/:month/:week/:v', function (req, res) {
     console.log(req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + ' update requested.');

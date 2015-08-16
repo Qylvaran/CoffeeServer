@@ -17,19 +17,12 @@ var oneDay = {
 
 module.exports = function (curMonthD) {
     //to become a list of sundays for the json object
-    var curMonthJ = [];
+    var curMonthJ = [];    
+    curMonthD.setDate(1);
     
-    //date object of the month to populate curMonthJ with
-    console.log(curMonthD.toDateString());
-    
-    var iterD = new Date(curMonthD.toDateString());
-    iterD.setDate(1);
-    
-    console.log(iterD.toDateString());
-    for (var m = curMonthD.getMonth(); m === iterD.getMonth(); iterD.setDate(iterD.getDate() + 1)) {
-        if (iterD.getDay() === 0) {
-            curMonthJ[curMonthJ.push(JSON.parse(JSON.stringify(oneDay))) - 1].date = iterD.getDate();
-            console.log(iterD.getDate());
+    for (var m = curMonthD.getMonth(); m === curMonthD.getMonth(); curMonthD.setDate(curMonthD.getDate() + 1)) {
+        if (curMonthD.getDay() === 0) {
+            curMonthJ[curMonthJ.push(JSON.parse(JSON.stringify(oneDay))) - 1].date = curMonthD.getDate();
         };
     };
     return curMonthJ;

@@ -23,14 +23,14 @@ fs.stat(dataFile, function (err, stat) {
         var monthString = '' + now.getFullYear() + '-' + monthNames[now.getMonth()];
         var startDB = {};
         startDB[monthString] = moonAdder(now);
-        console.log(startDB);//debugging
+        console.log('Database not present. Initializing with ' + monthString);
         jsonfile.writeFileSync(dataFile, startDB);
     }
     liveDB = jsonfile.readFileSync(dataFile);
 });
 
 app.post('/volunteer/:month/:week/:v', function (req, res) {
-    console.log(req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + ' update requested.');
+    console.log('Update requested to ' + req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + '.');
     console.log(req.body);
     liveDB[req.params.month][req.params.week].volunteers[req.params.v] = req.body;
     res.sendStatus(200);
@@ -39,7 +39,10 @@ app.post('/volunteer/:month/:week/:v', function (req, res) {
 
 app.post('/unvolunteer/:month/:week/:v', function (req, res) {
     //Remove a volunteer entry from the database
-    liveDB[req.params.month][req.params.week].volunteers[req.params.v] = {"name": "", "phone": "", "email": ""};
+    console.log('Request to remove existing volunteer from ' + req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + '.');
+    var removeData = liveDB[req.params.month][req.params.week].volunteers[req.params.v];
+    console.log(removeData);
+    liveDB[req.params.month][req.params.week].volunteers[req.params.v] = { "name": "", "phone": "", "email": "" };
     res.sendStatus(200);
     jsonfile.writeFile(dataFile, liveDB);
 });

@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path="./typings/tsd.d.ts" />
 
 $(function () {
     $.getJSON('month', function (monthList) {

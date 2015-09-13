@@ -41,10 +41,12 @@
     <Content Include="static\rptindex.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="scripts\" />
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="static\main.ts" />
+    <TypeScriptCompile Include="scripts\main.ts" />
+    <TypeScriptCompile Include="scripts\volunteerLine.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

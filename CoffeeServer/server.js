@@ -36,42 +36,77 @@ fs.stat(dataFile, function (err, stat) {
     liveDB = jsonfile.readFileSync(dataFile);
 });
 
-var j = schedule.scheduleJob('0 8 * * 4', function () {
+//send reminder emails Tuesday morning
+var j = schedule.scheduleJob('30 10 * * 2', function () {
     var d = new Date();
+    console.log('starting email section');
     d.setDate(d.getDate() + 3);
-    var thisMonthDB = liveDB[d.getFullYear() + '-' + d.getMonth()];
+    var thisMonthDB = liveDB[d.getFullYear() + '-' + monthNames[d.getMonth()]];
+    console.log(thisMonthDB);
     if (d.getDay() != 0) {
         console.log('Wrong day of the week: ' + d.getDay());
     }
     var i = 0;
+    var index = 0;
     while (i < thisMonthDB.length) {
-        if (thisMonthDB[i].date == d.getDate()) { break; }
+        if (thisMonthDB[i].date == d.getDate()) { index = i; }
+        i++;
     }
-    if (thisMonthDB[i].date != d.getDate()) {
+    if (thisMonthDB[index].date != d.getDate()) {
         console.log('Failed to find correct Sunday in DB.');
     }
-    var nxtSun = thisMonthDB[i];
-    var mailOptions = {
-        from: 'OPPC Fellowship <joseph.a.nichols@gmail.com>', // sender address
-        to: '', // list of receivers
-        subject: d.getMonth() + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
-        text: 'Thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of 8-10 dozen cookies to serve (if two households have signed up, you may each bring 4-5 dozen. If you have any questions, feel free to reply to this email.', // plaintext body
-    };
+    var nxtSun = thisMonthDB[index];
     var emails = [];
+    var voldata = [];
+    var voldatum = [];
     for (var k = 0; k < nxtSun.volunteers.length; k++) {
+        if (nxtSun.volunteers[k].name != '') {
+            voldatum = [];
+            for (var l in nxtSun.volunteers[k]) {
+                voldatum.push(nxtSun.volunteers[k][l]);
+            }
+            voldata.push(voldatum.join('\n'));
+        }
         if (nxtSun.volunteers[k].email != '') {
             emails.push(nxtSun.volunteers[k].email);
         }
     }
-    mailOptions.to = emails.join(', ');
-    if (mailOptions.to == '') {
-        console.log('No Volunteers! Panic!')
+    if (voldata.length == 0) {
+        console.log('No Volunteers! Panic!');
+    } else {
+        if (emails.length > 0) {
+            var mailOptions = {
+                from: 'OPPC Fellowship <oppccoffee@gmail.com>', // sender address
+                to: emails.join(', '), // list of receivers
+                subject: d.getMonth() + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
+                text: 'Thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. If you have any questions, feel free to reply to this email.', // plaintext body
+            };
+            transporter.sendMail(MailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Message sent: ' + info.response);
+                }
+            });
+        }
+        var reportMailOptions = {
+            from: 'OPPC Fellowship <oppccoffee@gmail.com>', // sender address
+            to: 'xllei2009@gmail.com',
+            subject: 'CoffeeServer Report',
+            text: 'The following have signed up for coffee hour this upcoming Sunday:\n\n' + voldata.join('\n')
+        }
+        transporter.sendMail(reportMailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });
     }
-    transporter.sendMail(mailOptions);
 });
 
 app.post('/volunteer/:month/:week/:v', function (req, res) {
-    //update a volunteer
+    //update a volunteer's information
     console.log('Update requested to ' + req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + '.');
     console.log(req.body);
     liveDB[req.params.month][req.params.week].volunteers[req.params.v] = req.body;

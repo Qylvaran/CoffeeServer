@@ -40,7 +40,7 @@ fs.stat(dataFile, function (err, stat) {
 var j = schedule.scheduleJob('30 10 * * 2', function () {
     var d = new Date();
     console.log('starting email section');
-    d.setDate(d.getDate() + 3);
+    d.setDate(d.getDate() + 5);
     var thisMonthDB = liveDB[d.getFullYear() + '-' + monthNames[d.getMonth()]];
     console.log(thisMonthDB);
     if (d.getDay() != 0) {
@@ -79,9 +79,9 @@ var j = schedule.scheduleJob('30 10 * * 2', function () {
                 from: 'OPPC Fellowship <oppccoffee@gmail.com>', // sender address
                 to: emails.join(', '), // list of receivers
                 subject: d.getMonth() + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
-                text: 'Thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. If you have any questions, feel free to reply to this email.', // plaintext body
+                text: 'Hello, and thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. You will also be helping to clean up afterwards. \n\nPlease reply to this email to confirm that you have received it, and so that I may answer any questions you have.\n\nBlessings,\nLaurel\n\nPS - There will be a cake after worship, so 3-4 dozen cookies each should be plenty.', // plaintext body
             };
-            transporter.sendMail(MailOptions, function (error, info) {
+            transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {

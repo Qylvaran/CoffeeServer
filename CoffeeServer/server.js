@@ -71,6 +71,7 @@ var j = schedule.scheduleJob('30 10 * * 2', function () {
             emails.push(nxtSun.volunteers[k].email);
         }
     }
+    emails.push('xllei2009@gmail.com');
     if (voldata.length == 0) {
         console.log('No Volunteers! Panic!');
     } else {
@@ -79,7 +80,7 @@ var j = schedule.scheduleJob('30 10 * * 2', function () {
                 from: 'OPPC Fellowship <oppccoffee@gmail.com>', // sender address
                 to: emails.join(', '), // list of receivers
                 subject: d.getMonth() + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
-                text: 'Hello, and thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. You will also be helping to clean up afterwards. \n\nPlease reply to this email to confirm that you have received it, and so that I may answer any questions you have.\n\nBlessings,\nLaurel\n\nPS - There will be a cake after worship, so 3-4 dozen cookies each should be plenty.', // plaintext body
+                text: 'Hello, and thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. You will also be helping to clean up afterwards. \n\nPlease reply to this email to confirm that you have received it, and so that I may answer any questions you have.\n\nBlessings,\nLaurel', // plaintext body
             };
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {

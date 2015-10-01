@@ -1,0 +1,12 @@
+﻿{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "outDir": "../static/",
+        "sourceMap": true
+    },
+    "exclude": [
+        "typings"
+    ]
+}

@@ -15,7 +15,7 @@
     "jquery": "^2.1.4",
     "jsonfile": "^2.2.2",
     "node-schedule": "^0.2.9",
-    "nodemailer": "^1.5.0"
+    "nodemailer": "^1.5.0",
     "tsd": "^0.6.4"
   }
 }

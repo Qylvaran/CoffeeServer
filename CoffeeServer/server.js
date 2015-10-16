@@ -79,7 +79,7 @@ var j = schedule.scheduleJob('30 10 * * 2', function () {
             var mailOptions = {
                 from: 'OPPC Fellowship <oppccoffee@gmail.com>', // sender address
                 to: emails.join(', '), // list of receivers
-                subject: d.getMonth() + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
+                subject: monthNames[d.getMonth()] + ' ' + d.getDate() + ' Coffee Hour Service', // Subject line
                 text: 'Hello, and thank you for volunteering to help serve coffee and cookies this Sunday. Please arrive by 9:30 am to help set up, and bring a total of ' + 8 / voldata.length + '-' + 10 / voldata.length + ' dozen cookies to serve. You will also be helping to clean up afterwards. \n\nPlease reply to this email to confirm that you have received it, and so that I may answer any questions you have.\n\nBlessings,\nLaurel', // plaintext body
             };
             transporter.sendMail(mailOptions, function (error, info) {

@@ -1,6 +1,6 @@
 {
   "name": "CoffeeServer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "CoffeeServer",
   "main": "server.js",
   "author": {

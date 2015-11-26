@@ -18,14 +18,14 @@
     "filesGlob": [
         "**/*.ts",
         "**/*.tsx",
+        "../typings/**/*.ts",
         "!node_modules/**"
     ],
     "files": [
-        "indexScript.ts",
-        "typings/jquery/jquery.d.ts",
-        "typings/tsApp.d.ts",
-        "typings/tsd.d.ts",
-        "volunteerEntry.ts"
+        "rptScript.ts",
+        "../typings/jquery/jquery.d.ts",
+        "../typings/tsApp.d.ts",
+        "../typings/tsd.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": true

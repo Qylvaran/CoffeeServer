@@ -20,6 +20,7 @@ var transporterObj = jsonfile.readFileSync(transporterFile);
 var transporter = nodemailer.createTransport(transporterObj);
 
 var dataFile = 'dbase.json';
+var arcFile = 'dbArchive.json';
 var liveDB;
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -34,6 +35,15 @@ fs.stat(dataFile, function (err, stat) {
         jsonfile.writeFileSync(dataFile, startDB);
     }
     liveDB = jsonfile.readFileSync(dataFile);
+});
+
+fs.stat(arcFile, function (err, stat) {
+    //create archive file if missing
+    if (err) {
+        var startArc = {};
+        console.log('Archive not present. Initializing.');
+        jsonfile.writeFileSync(arcFile, startArc);
+    }
 });
 
 //send reminder emails Tuesday morning
@@ -124,6 +134,28 @@ app.post('/unvolunteer/:month/:week/:v', function (req, res) {
     res.sendStatus(200);
     jsonfile.writeFile(dataFile, liveDB);
 });
+
+app.post('/archive', function (req, res) {
+  //Retire oldest month in db to archives
+  var oldMonth = Object.keys(liveDB)[0];
+  console.log('Removing ' + oldMonth + ' from database.');
+  var arcData = liveDB[oldMonth];
+  jsonfile.readFile(arcFile, function(err, obj) {
+    obj[oldMonth] = arcData;
+    jsonfile.writeFileSync(arcFile, obj);
+    delete liveDB[oldMonth];
+    jsonfile.writeFile(dataFile, liveDB);
+  });
+});
+
+app.post('/addmonth', function (req, res) {
+  var dbMonths = Object.keys(liveDB);
+  var dbMLast = dbMonths[dbMonths.length - 1];
+  var monthEnd = new Date(dbMLast.slice(0,4), monthNames.indexOf(dbMLast.slice(5)) + 1, 1);
+  var monthString = '' + monthEnd.getFullYear() + '-' + monthNames[monthEnd.getMonth()];
+  liveDB[monthString] = moonAdder(monthEnd);
+  jsonfile.writeFile(dataFile, liveDB);
+})
 
 app.get('/month', function (req, res) {
     //List of valid months for dropdown

@@ -13,14 +13,17 @@ function fillTable(){
           $(row).append('<td>' + mdata[i].volunteers[1].phone + '</td>');
           $(row).append('<td>' + mdata[i].volunteers[1].email + '</td>');
           $(tablef).append(row);
-          console.log(row);
         }
       });
     });
   });
-  console.log(tablef);
   $('#bigtable').append(tablef);
-}
+};
+
+function addEmailModifier(){
+
+};
+
 $(function(){
   fillTable();
-})
+});

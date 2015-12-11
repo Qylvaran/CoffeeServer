@@ -196,3 +196,5 @@ CoffeeServer/TS/typings/
 CoffeeServer/TS/JS/
 CoffeeServer/static/clientscript/clientadmin.js
 CoffeeServer/static/clientscript/clientmain.js
+CoffeeServer/dbArchive.json
+CoffeeServer/tpfile.json

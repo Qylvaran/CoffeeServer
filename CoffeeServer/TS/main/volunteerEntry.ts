@@ -15,7 +15,7 @@ var addEntryLine = function (id: string, month: string, week: number, volunteer:
 
   $('#' + id + ' form').one('submit', function (event) {
     event.preventDefault();
-    var formData: vData;
+    var formData = {name: "", phone: "", email: ""};
     $.each($('#' + id + ' form').serializeArray(), function (index, pair) {
       formData[pair.name] = pair.value;
     });

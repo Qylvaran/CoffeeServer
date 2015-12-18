@@ -116,6 +116,14 @@ var j = schedule.scheduleJob('30 10 * * 2', function () {
     }
 });
 
+function prepMail(m, w){
+  
+}
+
+app.get('/admin/getmail/:month/:week', function (req, res) {
+
+});
+
 app.post('/volunteer/:month/:week/:v', function (req, res) {
     //update a volunteer's information
     console.log('Update requested to ' + req.params.month + ' week ' + req.params.week + ', volunteer ' + req.params.v + '.');

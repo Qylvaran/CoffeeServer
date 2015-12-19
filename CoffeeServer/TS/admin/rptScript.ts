@@ -27,6 +27,13 @@ function fillTable(){
 
 function addEmailModifier(m, w){
   console.log(m + ' ' + w);
+  $.getJSON('admin/getmail/'+m+'/'+w, function(mailOptions){
+    console.log(mailOptions);
+    $('#eSubj').text(mailOptions.subject);
+    $('#eAddr').text('To: '+mailOptions.to);
+    $('#eTxt').val(mailOptions.text);
+    $('#eForm').attr("action", "admin/setmail/"+m+"/"+w);
+  });
 };
 
 $(function(){
@@ -36,5 +43,8 @@ $(function(){
     var w = $(this).attr("data-week");
     addEmailModifier(m, w);
     $("#emailModal").modal();
+  });
+  $("#eForm").submit(function(event){
+    $("#emailModal").modal("hide");
   });
 });

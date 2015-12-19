@@ -35,13 +35,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Email Addendum</h4>
+          <h4 class="modal-title" id="eSubj">Email Addendum</h4>
         </div>
         <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <p id="eAddr"></p>
+          <form id="eForm" role="form" method="post" action="admin/setmail">
+            <textarea id="eTxt" rows="8" class="form-control" name="emailText">Test Data. You should not ever see this.</textarea>
+            <button id="eSubmit" type="submit" class="btn btn-default">Save</button>
+          </form>
         </div>
       </div>
 
